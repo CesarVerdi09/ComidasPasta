@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Chisguete Italian Food</title>
+
+<style>
+
+body{
+    font-family: Arial;
+    background:#f2f2f2;
+}
+
+h1{
+    text-align:center;
+}
+
+.container{
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    gap:40px;
+}
+
+.izquierda img{
+    width:450px;
+    border-radius:10px;
+}
+
+form{
+    border:1px solid black;
+    padding:20px;
+    border-radius:10px;
+    width:300px;
+    background-color:#f7f7f7;
+}
+
+label{
+    font-weight:bold;
+}
+
+input, select{
+    width:100%;
+    padding:8px;
+    margin-top:5px;
+}
+
+button{
+    margin-top:10px;
+    width:100%;
+    padding:10px;
+    background:#7a2b2b;
+    color:white;
+    border:none;
+    cursor:pointer;
+}
+
+.mensaje{
+    text-align:center;
+    color:green;
+    font-weight:bold;
+}
+
+</style>
+</head>
+
+<body>
+
+<h1>Realiza tu pedido</h1>
+
+<div class="container">
+
+<div class="izquierda">
+<img src="https://images.unsplash.com/photo-1621996346565-e3dbc646d9a9">
+</div>
+
+
+<form id="miformulario">
+
+<label for="pasta">Selecciona la pasta:</label><br>
+<select id="pasta" required>
+
+<option value="Alfredo">Alfredo</option>
+<option value="Pesto">Pesto</option>
+<option value="Puttanesca">Puttanesca</option>
+
+</select>
+<br><br>
+
+<label for="nombre">Nombre:</label><br>
+<input type="text" id="nombre" required>
+<br><br>
+
+<label for="direccion">Dirección:</label><br>
+<input type="text" id="direccion" required>
+<br><br>
+
+<label for="telefono">Teléfono:</label><br>
+<input type="text" id="telefono" required>
+<br><br>
+
+<button type="submit">Enviar Pedido</button>
+
+</form>
+
+</div>
+
+<p class="mensaje" id="mensaje"></p>
+
+
+<script>
+
+const url = "https://script.google.com/macros/s/AKfycbwtpOY4lR7vCGb1JM7HI_kUFVQryW9YXcizdvWNkkh-s76wCRm08lklitOl9bXBv3DKIw/exec";
+
+document.getElementById("miformulario")
+.addEventListener("submit", function(e){
+
+    e.preventDefault();
+
+    const datos = {
+        pasta: document.getElementById("pasta").value,
+        nombre: document.getElementById("nombre").value,
+        direccion: document.getElementById("direccion").value,
+        telefono: document.getElementById("telefono").value
+    };
+
+    fetch(url, {
+        method: "POST",
+        body: JSON.stringify(datos)
+    })
+    .then(response => response.text())
+.then(data => {
+
+    document.getElementById("mensaje").innerHTML =
+    "Pedido guardado correctamente ✔️";
+
+    document.getElementById("miformulario").reset();
+
+})
+.catch(error => {
+
+    document.getElementById("mensaje").innerHTML =
+    "Error al guardar ❌";
+
+});
+
+});
+
+</script>
+
+</body>
+</html>
